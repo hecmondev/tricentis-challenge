@@ -17,7 +17,7 @@ function App() {
       setBands([...bands].slice(0, 4));
     } else {
       startTransition(() => {
-        setList([list[list.length - 1], ...list.slice(0, 4)]);
+        setList([...list.slice(1, 5), list[0]]);
       });
     }
   }, 1000);
