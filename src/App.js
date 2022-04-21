@@ -11,10 +11,14 @@ function App() {
 
   useInterval(() => {
     if (bands.length > 0) {
-      setList([...list.slice(1, 5), bands[bands.length - 1]]);
+      startTransition(() => {
+        setList([...list.slice(1, 5), bands[bands.length - 1]]);
+      });
       setBands([...bands].slice(0, 4));
     } else {
-      setList([list[list.length - 1], ...list.slice(0, 4)]);
+      startTransition(() => {
+        setList([list[list.length - 1], ...list.slice(0, 4)]);
+      });
     }
   }, 1000);
 
@@ -28,9 +32,7 @@ function App() {
           }
         });
         const data = await response.json();
-        startTransition(() => {
-          setBands(data.results.map(r => r.collectionName)?.sort().slice(0, 5));
-        });
+        setBands(data.results.map(r => r.collectionName)?.sort().slice(0, 5));
       } catch (error) {
         console.log(error);
       }
