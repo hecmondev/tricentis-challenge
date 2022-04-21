@@ -14,7 +14,7 @@ function App() {
       startTransition(() => {
         setList([...list.slice(1, 5), bands[bands.length - 1]]);
       });
-      setBands([...bands].slice(0, 4));
+      setBands([...bands].slice(0, bands.length - 1));
     } else {
       startTransition(() => {
         setList([...list.slice(1, 5), list[0]]);
@@ -32,7 +32,10 @@ function App() {
           }
         });
         const data = await response.json();
-        setBands(data.results.map(r => r.collectionName)?.sort().slice(0, 5));
+        const set = new Set(data.results.map((r) => r.collectionName)?.sort());
+        const albums = [];
+        for (let [key, value] of set.entries()) albums.push(key);
+        setBands([...albums.slice(0, 5)]);
       } catch (error) {
         console.log(error);
       }
